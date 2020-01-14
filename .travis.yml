@@ -15,9 +15,9 @@ after_success:
   - docker built -t richersoon/multi-worker ./worker
 
 # Log in to the docker CLI
-- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
-# - docker push richersoon/multi-client
-# - docker push richersoon/multi-nginx
-# - docker push richersoon/multi-server
-# - docker push richersoon/multi-worker
+  - docker push richersoon/multi-client
+  - docker push richersoon/multi-nginx
+  - docker push richersoon/multi-server
+  - docker push richersoon/multi-worker
