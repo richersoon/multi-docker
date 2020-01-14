@@ -1,0 +1,24 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t richersoon/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true richersoon/react-test npm run test
+
+after_success:
+  - docker build -t richersoon/multi-client ./client
+  - docker build -t richersoon/multi-nginx ./nginx
+  - docker build -t richersoon/multi-server ./server
+  - docker built -t richersoon/multi-worker ./worker
+
+# Log in to the docker CLI
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+- docker push richersoon/multi-client
+- docker push richersoon/multi-nginx
+- docker push richersoon/multi-server
+- docker push richersoon/multi-worker
+   
